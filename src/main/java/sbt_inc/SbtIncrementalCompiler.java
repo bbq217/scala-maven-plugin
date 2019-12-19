@@ -62,7 +62,9 @@ public class SbtIncrementalCompiler {
             l.info("Using incremental compilation");
             if (args.size() > 0) l.warn("extra args for zinc are ignored in non-server mode");
             this.logger = new SbtLogger(l);
-            Setup setup = Setup.create(compilerJar, libraryJar, extraJars, xsbtiJar, interfaceJar, null, false);
+            String javaPath = System.getenv("JAVA_HOME");
+            File javaHome = javaPath != null ? new File(javaPath) : null;
+            Setup setup = Setup.create(compilerJar, libraryJar, extraJars, xsbtiJar, interfaceJar, javaHome, false);
             if (l.isDebugEnabled()) Setup.debug(setup, logger);
             this.compiler = Compiler.create(setup, logger);
         }
